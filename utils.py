@@ -3,9 +3,6 @@ import os
 import json
 import botocore.config
 from dotenv import load_dotenv
-from PIL import Image
-import base64
-import io
 
 # loading environment variables
 load_dotenv()
@@ -231,22 +228,6 @@ Assistant: Here is a draft based on the provided user input and template
 
     # returning the final string to the end user
     return answer
-
-
-def summarize_call(user_input, config=None) -> str:
-    bedrock = get_bedrock_cli(config)
-    return prepare_meeting_notes(bedrock, user_input, config)
-    
-
-def review_text(user_input, rev_config={}, config=None) -> str:
-    bedrock = get_bedrock_cli(config)
-    llmOutput = invoke_llm_review(bedrock, user_input, rev_config, config)
-    text_reviewed_scaped = llmOutput[0].replace(":", "\:")
-    
-    print("reviewed")
-    print(text_reviewed_scaped)
-
-    return text_reviewed_scaped, llmOutput[1], llmOutput[2], llmOutput[3]
 
 
 def run_open_request(user_prompt, user_data, config) -> str:
